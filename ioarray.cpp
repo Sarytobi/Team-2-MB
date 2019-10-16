@@ -1,4 +1,6 @@
 #include <iostream>
+#include "conio.h"
+#include "windows.h"
 using namespace std;
 
 void CreateBoard(int** gameBoard, int size)
@@ -14,8 +16,7 @@ void CreateBoard(int** gameBoard, int size)
 
 void OutputBoard(int** gameBoard, int size)
 {
-	cout << "    12345678910";
-	cout << endl << "   ------------" << endl;
+	cout << "    1 2 3 4 5 6 7 8 9 10" << endl;
 	for (int i = 1; i < size - 1; i++)
 	{
 		if (i == 10)
@@ -30,34 +31,32 @@ void OutputBoard(int** gameBoard, int size)
 		{
 			if (gameBoard[i][j] == 0)
 			{
-				cout << " ";
+				cout << " " << "|";
 			}
 			else if (gameBoard[i][j] == 5)
 			{
-				cout << "x";
+				cout << "x" << "|";
 			}
 			else if (gameBoard[i][j] == 6)
 			{
-				cout << "X";
+				cout << "X" << "|";
 			}
 			else if (gameBoard[i][j] == 10)
 			{
-				cout << "*";
+				cout << "*" << "|";
 			}
 			else if (gameBoard[i][j] == 1 || gameBoard[i][j] == 2 || gameBoard[i][j] == 3 || gameBoard[i][j] == 4)
 			{
-				cout << "O";
+				cout << "O" << "|";
 			}
 		}
-		cout << "|" << endl;
+		cout << endl;
 	}
-	cout << "   ------------" << endl;
 }
 
 void OutputBoardDisguise(int** gameBoard, int size)
 {
-	cout << "    12345678910";
-	cout << endl << "   ------------" << endl;
+	cout << "    1 2 3 4 5 6 7 8 9 10" << endl;
 	for (int i = 1; i < size - 1; i++)
 	{
 		if (i == 10)
@@ -72,28 +71,27 @@ void OutputBoardDisguise(int** gameBoard, int size)
 		{
 			if (gameBoard[i][j] == 0)
 			{
-				cout << " ";
+				cout << " " << "|";
 			}
 			else if (gameBoard[i][j] == 5)
 			{
-				cout << "x";
+				cout << "x" << "|";
 			}
 			else if (gameBoard[i][j] == 6)
 			{
-				cout << "X";
+				cout << "X" << "|";
 			}
 			else if (gameBoard[i][j] == 10)
 			{
-				cout << "*";
+				cout << "*" << "|";
 			}
 			else if (gameBoard[i][j] == 1 || gameBoard[i][j] == 2 || gameBoard[i][j] == 3 || gameBoard[i][j] == 4)
 			{
-				cout << " ";
+				cout << " " << "|";
 			}
 		}
-		cout << "|" << endl;
+		cout << endl;
 	}
-	cout << "   ------------" << endl;
 }
 
 void InitBoard(int** gameBoard, int size)
@@ -364,4 +362,151 @@ void InitBoard(int** gameBoard, int size)
 		system("cls");
 		OutputBoard(gameBoard, size);
 	}
+}
+
+void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char shipDirection, int startPointRow, int startPointCol)
+{
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			gameBoardTemp[i][j] = gameBoard[i][j];
+		}
+	}
+
+	if (shipDirection == 'g')
+	{
+		for (int l = 0; l < 4; l++)
+		{
+			gameBoardTemp[startPointRow][startPointCol + l] = 4;
+		}
+	}
+	else if (shipDirection == 'v')
+	{
+		for (int l = 0; l < 4; l++)
+		{
+			gameBoardTemp[startPointRow + l][startPointCol] = 4;
+		}
+	}
+	else
+	{
+		cout << "Что-то не так с направлением " << endl;
+	}
+
+	cout << "    1 2 3 4 5 6 7 8 9 10" << endl;
+	for (int i = 1; i < size - 1; i++)
+	{
+		if (i == 10)
+		{
+			cout << i << " |";
+		}
+		else
+		{
+			cout << ' ' << i << " |";
+		}
+		for (int j = 1; j < size - 1; j++)
+		{
+			if (gameBoardTemp[i][j] == 0)
+			{
+				cout << " " << "|";
+			}
+			else if (gameBoardTemp[i][j] == 5)
+			{
+				cout << "x" << "|";
+			}
+			else if (gameBoardTemp[i][j] == 6)
+			{
+				cout << "X" << "|";
+			}
+			else if (gameBoardTemp[i][j] == 10)
+			{
+				cout << "*" << "|";
+			}
+			else if (gameBoardTemp[i][j] == 1 || gameBoardTemp[i][j] == 2 || gameBoardTemp[i][j] == 3 || gameBoardTemp[i][j] == 4)
+			{
+				cout << "O" << "|";
+			}
+		}
+		cout << endl;
+	}
+}
+
+void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
+{
+	char shipDirection;
+	int startPointRow, startPointCol, pushButton;
+	bool chekShipNearby = true;
+	cout << "Let arrange four-deckers ship " << endl;
+	
+	startPointRow = 1;
+	startPointCol = 1;
+	shipDirection = 'g';
+	do
+	{	
+		system("cls");
+		OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol);
+		pushButton = _getch();
+		if (pushButton == 224) //push
+		{
+			pushButton = _getch();
+		}
+	
+		if (pushButton == 72) //up
+		{
+			if (startPointRow > 1)
+			{
+				startPointRow--;
+			}
+		}
+		else if (pushButton == 80) //down
+		{
+			if (startPointRow < 10)
+			{
+				if ((shipDirection == 'g') || (shipDirection == 'v' && startPointRow < 7))
+				{
+					startPointRow++;
+				}
+			}
+		}
+		else if (pushButton == 75) //left
+		{
+			if (startPointCol > 1)
+			{
+				startPointCol--;
+			}
+		}
+		else if (pushButton == 77) //right
+		{
+			if (startPointCol < 10)
+			{
+				if ((shipDirection == 'v') || (shipDirection == 'g' && startPointCol < 7))
+				{
+					startPointCol++;
+				}		
+			}
+		}
+		else if (pushButton == 32) //space
+		{
+			if (shipDirection == 'g')
+			{
+				shipDirection = 'v';
+				if (startPointRow > 7)
+				{
+					startPointRow = 7;
+				}
+			}
+			else if (shipDirection == 'v')
+			{
+				shipDirection = 'g';
+				if (startPointCol > 7)
+				{
+					startPointCol = 7;
+				}
+			}
+		}
+		else if (pushButton == 13) //enter
+		{
+			break;
+		}
+	} while (true);
 }
