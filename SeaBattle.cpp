@@ -56,6 +56,8 @@ int main()
 			cout << "First player shot " << endl;
 			cout << "Second player board with disguise " << endl;
 			OutputBoardDisguise(gameBoard2, SIZE);
+			cout << "First player board" << endl;
+			OutputBoard(gameBoard1, SIZE);
 			if (Shoot(gameBoard2, SIZE) == 0)
 			{
 				system("cls");
@@ -89,6 +91,8 @@ int main()
 			cout << "Second player shot " << endl;
 			cout << "First player board with disguise" << endl;
 			OutputBoardDisguise(gameBoard1, SIZE);
+			cout << "Second player board" << endl;
+			OutputBoard(gameBoard2, SIZE);
 			if (Shoot(gameBoard1, SIZE) == 0)
 			{
 				system("cls");
