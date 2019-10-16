@@ -364,7 +364,7 @@ void InitBoard(int** gameBoard, int size)
 	}
 }
 
-void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char shipDirection, int startPointRow, int startPointCol)
+void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char shipDirection, int startPointRow, int startPointCol, int value)
 {
 	for (int i = 0; i < size; i++)
 	{
@@ -376,16 +376,16 @@ void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char s
 
 	if (shipDirection == 'g')
 	{
-		for (int l = 0; l < 4; l++)
+		for (int l = 0; l < value; l++)
 		{
-			gameBoardTemp[startPointRow][startPointCol + l] = 4;
+			gameBoardTemp[startPointRow][startPointCol + l] = value;
 		}
 	}
 	else if (shipDirection == 'v')
 	{
-		for (int l = 0; l < 4; l++)
+		for (int l = 0; l < value; l++)
 		{
-			gameBoardTemp[startPointRow + l][startPointCol] = 4;
+			gameBoardTemp[startPointRow + l][startPointCol] = value;
 		}
 	}
 	else
@@ -429,6 +429,7 @@ void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char s
 		}
 		cout << endl;
 	}
+	cout << "Control by arrows, press Space to change ship direction, press Enter to arrange ship on the game board" << endl;
 }
 
 void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
@@ -436,15 +437,16 @@ void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
 	char shipDirection;
 	int startPointRow, startPointCol, pushButton;
 	bool chekShipNearby = true;
-	cout << "Let arrange four-deckers ship " << endl;
 	
 	startPointRow = 1;
 	startPointCol = 1;
 	shipDirection = 'g';
 	do
 	{	
+		//four-deckers ship
 		system("cls");
-		OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol);
+		OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol, 4);
+		cout << "Let arrange four-deckers ship " << endl;
 		pushButton = _getch();
 		if (pushButton == 224) //push
 		{
@@ -506,7 +508,351 @@ void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
 		}
 		else if (pushButton == 13) //enter
 		{
-			break;
+			if (shipDirection == 'g')
+			{
+				for (int l = 0; l < 4; l++)
+				{
+					gameBoard[startPointRow][startPointCol + l] = 4;
+				}
+				break;
+			}
+			else if (shipDirection == 'v')
+			{
+				for (int l = 0; l < 4; l++)
+				{
+					gameBoard[startPointRow + l][startPointCol] = 4;
+				}
+				break;
+			}
 		}
 	} while (true);
+	//tree-deckers ships
+	system("cls");
+	OutputBoard(gameBoard, size);
+	for (int i = 0; i < 2; i++)
+	{
+		startPointRow = 1;
+		startPointCol = 1;
+		shipDirection = 'g';
+		do
+		{
+			system("cls");
+			OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol, 3);
+			cout << "Let arrange two three-deckers ship " << endl;
+			pushButton = _getch();
+			if (pushButton == 224) //push
+			{
+				pushButton = _getch();
+			}
+
+			if (pushButton == 72) //up
+			{
+				if (startPointRow > 1)
+				{
+					startPointRow--;
+				}
+			}
+			else if (pushButton == 80) //down
+			{
+				if (startPointRow < 10)
+				{
+					if ((shipDirection == 'g') || (shipDirection == 'v' && startPointRow < 8))
+					{
+						startPointRow++;
+					}
+				}
+			}
+			else if (pushButton == 75) //left
+			{
+				if (startPointCol > 1)
+				{
+					startPointCol--;
+				}
+			}
+			else if (pushButton == 77) //right
+			{
+				if (startPointCol < 10)
+				{
+					if ((shipDirection == 'v') || (shipDirection == 'g' && startPointCol < 8))
+					{
+						startPointCol++;
+					}
+				}
+			}
+			else if (pushButton == 32) //space
+			{
+				if (shipDirection == 'g')
+				{
+					shipDirection = 'v';
+					if (startPointRow > 8)
+					{
+						startPointRow = 8;
+					}
+				}
+				else if (shipDirection == 'v')
+				{
+					shipDirection = 'g';
+					if (startPointCol > 8)
+					{
+						startPointCol = 8;
+					}
+				}
+			}
+			else if (pushButton == 13) //enter
+			{
+				chekShipNearby = true;
+				
+				if (shipDirection == 'g')
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 0; k < 5; k++)
+						{
+							if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
+							{
+								chekShipNearby = false;
+							}
+						}
+					}
+					if (startPointCol <= 8 && chekShipNearby)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							gameBoard[startPointRow][startPointCol + l] = 3;
+						}
+						break;
+					}
+					else
+					{
+						cout << "The ship is out of the game board or srapes other ships " << endl;
+					}
+				}
+				else if (shipDirection == 'v')
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 0; k < 5; k++)
+						{
+							if (gameBoard[startPointRow - 1 + k][startPointCol - 1 + j] != 0)
+							{
+								chekShipNearby = false;
+							}
+						}
+					}
+					if (startPointRow <= 8 && chekShipNearby)
+					{
+						for (int l = 0; l < 3; l++)
+						{
+							gameBoard[startPointRow + l][startPointCol] = 3;
+						}
+						break;
+					}
+					else
+					{
+						cout << "The ship is out of the game board or srapes other ships " << endl;
+					}
+				}
+			}
+		} while (true);
+	}
+	//two-deckers ships
+	system("cls");
+	OutputBoard(gameBoard, size);
+	for (int i = 0; i < 3; i++)
+	{
+		startPointRow = 1;
+		startPointCol = 1;
+		shipDirection = 'g';
+		do
+		{
+			system("cls");
+			OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol, 2);
+			cout << "Let arrange three two-deckers ship " << endl;
+			pushButton = _getch();
+			if (pushButton == 224) //push
+			{
+				pushButton = _getch();
+			}
+
+			if (pushButton == 72) //up
+			{
+				if (startPointRow > 1)
+				{
+					startPointRow--;
+				}
+			}
+			else if (pushButton == 80) //down
+			{
+				if (startPointRow < 10)
+				{
+					if ((shipDirection == 'g') || (shipDirection == 'v' && startPointRow < 9))
+					{
+						startPointRow++;
+					}
+				}
+			}
+			else if (pushButton == 75) //left
+			{
+				if (startPointCol > 1)
+				{
+					startPointCol--;
+				}
+			}
+			else if (pushButton == 77) //right
+			{
+				if (startPointCol < 10)
+				{
+					if ((shipDirection == 'v') || (shipDirection == 'g' && startPointCol < 9))
+					{
+						startPointCol++;
+					}
+				}
+			}
+			else if (pushButton == 32) //space
+			{
+				if (shipDirection == 'g')
+				{
+					shipDirection = 'v';
+					if (startPointRow > 9)
+					{
+						startPointRow = 9;
+					}
+				}
+				else if (shipDirection == 'v')
+				{
+					shipDirection = 'g';
+					if (startPointCol > 9)
+					{
+						startPointCol = 9;
+					}
+				}
+			}
+			else if (pushButton == 13) //enter
+			{
+				chekShipNearby = true;
+
+				if (shipDirection == 'g')
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 0; k < 4; k++)
+						{
+							if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
+							{
+								chekShipNearby = false;
+							}
+						}
+					}
+					if (startPointCol <= 9 && chekShipNearby)
+					{
+						for (int l = 0; l < 2; l++)
+						{
+							gameBoard[startPointRow][startPointCol + l] = 2;
+						}
+						break;
+					}
+					else
+					{
+						cout << "The ship is out of the game board or srapes other ships " << endl;
+					}
+				}
+				else if (shipDirection == 'v')
+				{
+					for (int j = 0; j < 3; j++)
+					{
+						for (int k = 0; k < 4; k++)
+						{
+							if (gameBoard[startPointRow - 1 + k][startPointCol - 1 + j] != 0)
+							{
+								chekShipNearby = false;
+							}
+						}
+					}
+					if (startPointRow <= 9 && chekShipNearby)
+					{
+						for (int l = 0; l < 2; l++)
+						{
+							gameBoard[startPointRow + l][startPointCol] = 2;
+						}
+						break;
+					}
+					else
+					{
+						cout << "The ship is out of the game board or srapes other ships " << endl;
+					}
+				}
+			}
+		} while (true);
+	}
+	//one-deckers ships
+	system("cls");
+	OutputBoard(gameBoard, size);
+	for (int i = 0; i < 3; i++)
+	{
+		startPointRow = 1;
+		startPointCol = 1;
+		shipDirection = 'g';
+		do
+		{
+			system("cls");
+			OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol, 1);
+			cout << "Let arrange three two-deckers ship " << endl;
+			pushButton = _getch();
+			if (pushButton == 224) //push
+			{
+				pushButton = _getch();
+			}
+			if (pushButton == 72) //up
+			{
+				if (startPointRow > 1)
+				{
+					startPointRow--;
+				}
+			}
+			else if (pushButton == 80) //down
+			{
+				if (startPointRow < 10)
+				{
+					startPointRow++;
+				}
+			}
+			else if (pushButton == 75) //left
+			{
+				if (startPointCol > 1)
+				{
+					startPointCol--;
+				}
+			}
+			else if (pushButton == 77) //right
+			{
+				if (startPointCol < 10)
+				{
+					startPointCol++;
+				}
+			}
+			else if (pushButton == 13) //enter
+			{
+				chekShipNearby = true;
+				for (int j = 0; j < 3; j++)
+				{
+					for (int k = 0; k < 3; k++)
+					{
+						if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
+						{
+							chekShipNearby = false;
+						}
+					}
+				}
+				if (startPointCol <= 9 && chekShipNearby)
+				{
+					gameBoard[startPointRow][startPointCol] = 2;
+					break;
+				}
+				else
+				{
+					cout << "The ship is out of the game board or srapes other ships " << endl;
+				}
+			}
+		} while (true);
+	}
 }
