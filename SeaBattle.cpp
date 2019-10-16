@@ -40,7 +40,7 @@ int main()
 	cout << "Let arrange first player ships " << endl;
 	InitBoardPrototype(gameBoard1, gameBoardTemp, SIZE);
 	cout << "Let arrange second player ships " << endl;
-	InitBoard(gameBoard2, SIZE);
+	InitBoardPrototype(gameBoard1, gameBoardTemp, SIZE);
 	system("cls");
 	cout << "First player board " << endl;
 	OutputBoard(gameBoard1, SIZE);
