@@ -787,7 +787,7 @@ void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
 	//one-deckers ships
 	system("cls");
 	OutputBoard(gameBoard, size);
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		startPointRow = 1;
 		startPointCol = 1;
