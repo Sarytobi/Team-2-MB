@@ -1,5 +1,7 @@
-﻿
+
 #include <iostream>
+#include "conio.h"
+#include "windows.h"
 #include "ioarray.h"
 #include "play.h"
 
@@ -20,6 +22,11 @@ int main()
 	{
 		gameBoard2[i] = new int[SIZE];
 	}
+	int** gameBoardTemp = new int* [SIZE];
+	for (int i = 0; i < SIZE; i++)
+	{
+		gameBoardTemp[i] = new int[SIZE];
+	}
 
 	int lifeCounter1 = 0;
 	int lifeCounter2 = 0;
@@ -31,7 +38,7 @@ int main()
 	cout << "Second player board " << endl;
 	OutputBoard(gameBoard2, SIZE);
 	cout << "Let arrange first player ships " << endl;
-	InitBoard(gameBoard1, SIZE);
+	InitBoardPrototype(gameBoard1, gameBoardTemp, SIZE);
 	cout << "Let arrange second player ships " << endl;
 	InitBoard(gameBoard2, SIZE);
 	system("cls");
@@ -137,5 +144,9 @@ int main()
 	for (int i = 0; i < SIZE; i++)
 	{
 		delete[] gameBoard2[i];
+	}
+	for (int i = 0; i < SIZE; i++)
+	{
+		delete[] gameBoardTemp[i];
 	}
 }
