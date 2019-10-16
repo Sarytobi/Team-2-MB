@@ -16,6 +16,7 @@ void CreateBoard(int** gameBoard, int size)
 
 void OutputBoard(int** gameBoard, int size)
 {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	cout << "    1 2 3 4 5 6 7 8 9 10" << endl;
 	for (int i = 1; i < size - 1; i++)
 	{
@@ -35,11 +36,17 @@ void OutputBoard(int** gameBoard, int size)
 			}
 			else if (gameBoard[i][j] == 5)
 			{
-				cout << "x" << "|";
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << "x";
+				SetConsoleTextAttribute(hConsole, 15);
+				cout << "|";
 			}
 			else if (gameBoard[i][j] == 6)
 			{
-				cout << "X" << "|";
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << "X";
+				SetConsoleTextAttribute(hConsole, 15);
+				cout << "|";
 			}
 			else if (gameBoard[i][j] == 10)
 			{
@@ -47,7 +54,10 @@ void OutputBoard(int** gameBoard, int size)
 			}
 			else if (gameBoard[i][j] == 1 || gameBoard[i][j] == 2 || gameBoard[i][j] == 3 || gameBoard[i][j] == 4)
 			{
-				cout << "O" << "|";
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << " ";
+				SetConsoleTextAttribute(hConsole, 15);
+				cout << "|";
 			}
 		}
 		cout << endl;
@@ -366,6 +376,7 @@ void InitBoard(int** gameBoard, int size)
 
 void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char shipDirection, int startPointRow, int startPointCol, int value)
 {
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size; j++)
@@ -412,11 +423,17 @@ void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char s
 			}
 			else if (gameBoardTemp[i][j] == 5)
 			{
-				cout << "x" << "|";
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << "x";
+				SetConsoleTextAttribute(hConsole, 15);
+				cout << "|";
 			}
 			else if (gameBoardTemp[i][j] == 6)
 			{
-				cout << "X" << "|";
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << "X";
+				SetConsoleTextAttribute(hConsole, 15);
+				cout << "|";
 			}
 			else if (gameBoardTemp[i][j] == 10)
 			{
@@ -424,7 +441,10 @@ void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char s
 			}
 			else if (gameBoardTemp[i][j] == 1 || gameBoardTemp[i][j] == 2 || gameBoardTemp[i][j] == 3 || gameBoardTemp[i][j] == 4)
 			{
-				cout << "O" << "|";
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << " ";
+				SetConsoleTextAttribute(hConsole, 15);
+				cout << "|";
 			}
 		}
 		cout << endl;
