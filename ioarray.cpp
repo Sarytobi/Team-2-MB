@@ -52,12 +52,19 @@ void OutputBoard(int** gameBoard, int size)
 			{
 				cout << "*" << "|";
 			}
-			else if (gameBoard[i][j] == 1 || gameBoard[i][j] == 2 || gameBoard[i][j] == 3 || gameBoard[i][j] == 4)
+			else if ((gameBoard[i][j] == 1 || gameBoard[i][j] == 2 || gameBoard[i][j] == 3 || gameBoard[i][j] == 4)
+				&& gameBoard[i][j + 1] == 0)
 			{
 				SetConsoleTextAttribute(hConsole, 240);
 				cout << " ";
 				SetConsoleTextAttribute(hConsole, 15);
 				cout << "|";
+			}
+			else if (gameBoard[i][j] == 1 || gameBoard[i][j] == 2 || gameBoard[i][j] == 3 || gameBoard[i][j] == 4)
+			{
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << " " << "|";
+				SetConsoleTextAttribute(hConsole, 15);
 			}
 		}
 		cout << endl;
@@ -101,276 +108,6 @@ void OutputBoardDisguise(int** gameBoard, int size)
 			}
 		}
 		cout << endl;
-	}
-}
-
-void InitBoard(int** gameBoard, int size)
-{
-	char shipDirection;
-	int startPointRow, startPointCol;
-	bool chekShipNearby = true;
-	cout << "Let arrange four-deckers ship " << endl;
-	do
-	{
-		cout << "Enter g - gorizontal ship, v - vertical ship ";
-		cin >> shipDirection; cout << endl;
-		if (shipDirection == 'g' || shipDirection == 'G')
-		{
-			do
-			{
-				cout << "Enter the starting coordinate of the ship(row) ";
-				cin >> startPointRow; cout << endl;
-				cout << "Enter the starting coordinate of the ship(column) ";
-				cin >> startPointCol; cout << endl;
-				if (startPointCol <= 7)
-				{
-					break;
-				}
-				else
-				{
-					cout << "The ship is out of the game board " << endl;
-				}
-			} while (true);
-			
-			for (int l = 0; l < 4; l++)
-			{
-				gameBoard[startPointRow][startPointCol + l] = 4;
-			}
-			break;
-		}
-		else if (shipDirection == 'v' || shipDirection == 'V')
-		{
-			do
-			{
-				cout << "Enter the starting coordinate of the ship(row) ";
-				cin >> startPointRow; cout << endl;
-				cout << "Enter the starting coordinate of the ship(column) ";
-				cin >> startPointCol; cout << endl;
-				if (startPointRow <= 7)
-				{
-					break;
-				}
-				else
-				{
-					cout << "The ship is out of the game board " << endl;
-				}
-			} while (true);
-			
-			for (int l = 0; l < 4; l++)
-			{
-				gameBoard[startPointRow + l][startPointCol] = 4;
-			}
-			break;
-		}
-		else
-		{
-			cout << "Input error " << endl;
-		}
-	} while (true);
-	system("cls");
-	OutputBoard(gameBoard, size);
-	cout << "Let arrange two three-deckers ship " << endl;
-	for (int i = 0; i < 2; i++)
-	{
-		do
-		{
-			cout << "Enter g - gorizontal ship, v - vertical ship ";
-			cin >> shipDirection; cout << endl;
-			if (shipDirection == 'g' || shipDirection == 'G')
-			{
-				do
-				{
-					chekShipNearby = true;
-					cout << "Enter the starting coordinate of the ship(row) ";
-					cin >> startPointRow; cout << endl;
-					cout << "Enter the starting coordinate of the ship(column) ";
-					cin >> startPointCol; cout << endl;
-					for (int j = 0; j < 3; j++)
-					{
-						for (int k = 0; k < 5; k++)
-						{
-							if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
-							{
-								chekShipNearby = false;
-							}
-						}
-					}
-					if (startPointCol <= 8 && chekShipNearby)
-					{
-						break;
-					}
-					else
-					{
-						cout << "The ship is out of the game board or srapes other ships " << endl;
-					}
-				} while (true);
-
-				for (int l = 0; l < 3; l++)
-				{
-					gameBoard[startPointRow][startPointCol + l] = 3;
-				}
-				break;
-			}
-			else if (shipDirection == 'v' || shipDirection == 'V')
-			{
-				do
-				{
-					chekShipNearby = true;
-					cout << "Enter the starting coordinate of the ship(row) ";
-					cin >> startPointRow; cout << endl;
-					cout << "Enter the starting coordinate of the ship(column) ";
-					cin >> startPointCol; cout << endl;
-					for (int j = 0; j < 5; j++)
-					{
-						for (int k = 0; k < 3; k++)
-						{
-							if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
-							{
-								chekShipNearby = false;
-							}
-						}
-					}
-					if (startPointRow <= 8 && chekShipNearby)
-					{
-						break;
-					}
-					else
-					{
-						cout << "The ship is out of the game board or srapes other ships " << endl;
-					}
-				} while (true);
-
-				for (int l = 0; l < 3; l++)
-				{
-					gameBoard[startPointRow + l][startPointCol] = 3;
-				}
-				break;
-			}
-			else
-			{
-				cout << "Input error " << endl;
-			}
-		} while (true);
-		system("cls");
-		OutputBoard(gameBoard, size);
-	}
-	cout << "Let arrange three two-deckers ship " << endl;
-	for (int i = 0; i < 3; i++)
-	{
-		do
-		{
-			cout << "Enter g - gorizontal ship, v - vertical ship ";
-			cin >> shipDirection; cout << endl;
-			if (shipDirection == 'g' || shipDirection == 'G')
-			{
-				do
-				{
-					chekShipNearby = true;
-					cout << "Enter the starting coordinate of the ship(row) ";
-					cin >> startPointRow; cout << endl;
-					cout << "Enter the starting coordinate of the ship(column) ";
-					cin >> startPointCol; cout << endl;
-					for (int j = 0; j < 3; j++)
-					{
-						for (int k = 0; k < 4; k++)
-						{
-							if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
-							{
-								chekShipNearby = false;
-							}
-						}
-					}
-					if (startPointCol <= 9 && chekShipNearby)
-					{
-						break;
-					}
-					else
-					{
-						cout << "The ship is out of the game board or srapes other ships " << endl;
-					}
-				} while (true);
-
-				for (int l = 0; l < 2; l++)
-				{
-					gameBoard[startPointRow][startPointCol + l] = 2;
-				}
-				break;
-			}
-			else if (shipDirection == 'v' || shipDirection == 'V')
-			{
-				do
-				{
-					chekShipNearby = true;
-					cout << "Enter the starting coordinate of the ship(row) ";
-					cin >> startPointRow; cout << endl;
-					cout << "Enter the starting coordinate of the ship(column) ";
-					cin >> startPointCol; cout << endl;
-					for (int j = 0; j < 4; j++)
-					{
-						for (int k = 0; k < 3; k++)
-						{
-							if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
-							{
-								chekShipNearby = false;
-							}
-						}
-					}
-					if (startPointRow <= 9 && chekShipNearby)
-					{
-						break;
-					}
-					else
-					{
-						cout << "The ship is out of the game board or srapes other ships " << endl;
-					}
-				} while (true);
-
-				for (int l = 0; l < 2; l++)
-				{
-					gameBoard[startPointRow + l][startPointCol] = 2;
-				}
-				break;
-			}
-			else
-			{
-				cout << "Input error " << endl;
-			}
-		} while (true);
-		system("cls");
-		OutputBoard(gameBoard, size);
-	}
-	cout << "Let arrange four one-deckers ship " << endl;
-	for (int i = 0; i < 4; i++)
-	{
-		do
-		{
-			chekShipNearby = true;
-			cout << "Enter the starting coordinate of the ship(row) ";
-			cin >> startPointRow; cout << endl;
-			cout << "Enter the starting coordinate of the ship(column) ";
-			cin >> startPointCol; cout << endl;
-			for (int j = 0; j < 3; j++)
-			{
-				for (int k = 0; k < 3; k++)
-				{
-					if (gameBoard[startPointRow - 1 + j][startPointCol - 1 + k] != 0)
-					{
-						chekShipNearby = false;
-					}
-				}
-			}
-			if (startPointCol <= 10  && startPointRow <= 10 && chekShipNearby)
-			{
-				break;
-			}
-			else
-			{
-				cout << "The ship is out of the game board or srapes other ships " << endl;
-			}
-		} while (true);
-		gameBoard[startPointRow][startPointCol] = 1;
-		system("cls");
-		OutputBoard(gameBoard, size);
 	}
 }
 
@@ -439,12 +176,19 @@ void OutputBoardPrototype(int** gameBoard, int** gameBoardTemp, int size, char s
 			{
 				cout << "*" << "|";
 			}
-			else if (gameBoardTemp[i][j] == 1 || gameBoardTemp[i][j] == 2 || gameBoardTemp[i][j] == 3 || gameBoardTemp[i][j] == 4)
+			else if ((gameBoardTemp[i][j] == 1 || gameBoardTemp[i][j] == 2 || gameBoardTemp[i][j] == 3 || gameBoardTemp[i][j] == 4)
+				&& gameBoardTemp[i][j + 1] == 0)
 			{
 				SetConsoleTextAttribute(hConsole, 240);
 				cout << " ";
 				SetConsoleTextAttribute(hConsole, 15);
 				cout << "|";
+			}
+			else if (gameBoardTemp[i][j] == 1 || gameBoardTemp[i][j] == 2 || gameBoardTemp[i][j] == 3 || gameBoardTemp[i][j] == 4)
+			{
+				SetConsoleTextAttribute(hConsole, 240);
+				cout << " " << "|";
+				SetConsoleTextAttribute(hConsole, 15);
 			}
 		}
 		cout << endl;
@@ -816,7 +560,7 @@ void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
 		{
 			system("cls");
 			OutputBoardPrototype(gameBoard, gameBoardTemp, size, shipDirection, startPointRow, startPointCol, 1);
-			cout << "Let arrange three two-deckers ship " << endl;
+			cout << "Let arrange four one-decker ship " << endl;
 			pushButton = _getch();
 			if (pushButton == 224) //push
 			{
@@ -863,9 +607,9 @@ void InitBoardPrototype(int** gameBoard, int** gameBoardTemp, int size)
 						}
 					}
 				}
-				if (startPointCol <= 9 && chekShipNearby)
+				if (startPointCol <= 10 && chekShipNearby)
 				{
-					gameBoard[startPointRow][startPointCol] = 2;
+					gameBoard[startPointRow][startPointCol] = 1;
 					break;
 				}
 				else
