@@ -7,6 +7,7 @@
 - ioarray.h
 - play.h
 - play.cpp
+
 - SeaBattle.cpp
 > Основной файл проекта
 > где исполняется функции файлов
