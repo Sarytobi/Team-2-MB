@@ -3,11 +3,11 @@
 
 ## Файлы проекта
 
-- ( ) ioarray.cpp
-- [ ] ioarray.h
-- [ ] play.h
-- [ ] play.cpp
-- [ ] SeaBattle.cpp
+- ioarray.cpp
+- ioarray.h
+- play.h
+- play.cpp
+- SeaBattle.cpp
 
 
 ## Запуск
