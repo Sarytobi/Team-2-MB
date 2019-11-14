@@ -5,11 +5,10 @@
 
 ## Файлы проекта
 
-- ioarray.cpp
-- ioarray.h
-- play.h
-- play.cpp
-
+- [ioarray.cpp](ioarray.cpp)
+- [ioarray.h](ioarray.h)
+- [play.h](play.h)
+- [play.cpp](play.cpp)
 - [SeaBattle.cpp](SeaBattle.cpp)
 > Основной файл проекта
 > где исполняется функции файлов
