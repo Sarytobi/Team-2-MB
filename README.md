@@ -12,7 +12,7 @@
 - [SeaBattle.cpp](SeaBattle.cpp)
 > Основной файл проекта
 > где исполняется функции файлов
-> play.cpp и `[ioarray.cpp](ioarray.cpp)`
+> `play.cpp` и `ioarray.cpp`
 
 
 ## Запуск
