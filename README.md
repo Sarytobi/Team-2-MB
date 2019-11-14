@@ -10,7 +10,7 @@
 - play.h
 - play.cpp
 
-- SeaBattle.cpp
+- SeaBattle.cpp(https://github.com/Sarytobi/Team-2-MB/blob/master/SeaBattle.cpp)
 > Основной файл проекта
 > где исполняется функции файлов
 > play.cpp и `ioarray.cpp`
