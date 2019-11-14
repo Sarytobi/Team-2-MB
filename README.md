@@ -3,7 +3,7 @@
 
 ## Файлы проекта
 
-- [ ] ioarray.cpp
+- ( ) ioarray.cpp
 - [ ] ioarray.h
 - [ ] play.h
 - [ ] play.cpp
